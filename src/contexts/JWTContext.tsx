@@ -83,21 +83,22 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const response = await axios.post(
-      '/api/admin/login',
-      { username: email, password },
-      {
-        baseURL: process.env.REACT_APP_API_DOMAIN
-      }
-    );
-    console.log('response', response);
-    const { token: serviceToken, payload } = response.data;
-    setSession(serviceToken);
+    // const response = await axios.post(
+    //   '/api/admin/login',
+    //   { username: email, password },
+    //   {
+    //     baseURL: process.env.REACT_APP_API_DOMAIN
+    //   }
+    // );
+    // console.log('response', response);
+    // const { token: serviceToken, payload } = response.data;
+
+    setSession('serviceToken');
     dispatch({
       type: LOGIN,
       payload: {
         isLoggedIn: true,
-        user: { name: payload?.username }
+        user: { name: 'dunglh' }
       }
     });
   };

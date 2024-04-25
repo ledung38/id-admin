@@ -132,10 +132,10 @@ export const CustomersList = () => {
       <MyTable<Customer, CustomerFilter, CustomerSortField>
         onFilterChange={(filters) => setFilters(filters)}
         delegate={renderItems}
-        rows={data?.data ? data.data : []}
+        rows={[]}
         headCells={headCells}
         pageTotal={data?.meta.pageCount ? data?.meta.pageCount : 0}
-        isLoading={isLoading}
+        isLoading={false}
       />
     </>
   );

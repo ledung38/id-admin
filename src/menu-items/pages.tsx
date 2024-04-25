@@ -39,8 +39,44 @@ const pages: NavItemType = {
   type: 'group',
   children: [
     {
+      id: 'orders',
+      title: <FormattedMessage id="Đơn hàng" />,
+      type: 'item',
+      url: '/orders/list',
+      icon: icons.UnorderedListOutlined
+    },
+    {
+      id: 'customers',
+      title: <FormattedMessage id="Khách hàng" />,
+      type: 'collapse',
+      icon: icons.UserOutlined,
+      children: [
+        {
+          id: 'list',
+          title: <FormattedMessage id="Danh sách khách hàng" />,
+          type: 'item',
+          url: '/customers/list',
+          icon: icons.OrderedListOutlined
+        },
+        {
+          id: 'create',
+          title: <FormattedMessage id="Tạo khách hàng mới" />,
+          type: 'item',
+          url: '/customers/create',
+          icon: icons.PlusOutlined
+        }
+      ]
+    },
+    {
+      id: 'sales',
+      title: <FormattedMessage id="Danh sách sản phẩm" />,
+      type: 'item',
+      url: '/sales/list',
+      icon: icons.UserOutlined
+    },
+    {
       id: 'apps',
-      title: <FormattedMessage id="Profile" />,
+      title: <FormattedMessage id="Hồ sơ" />,
       type: 'collapse',
       icon: icons.ProfileOutlined,
       children: [
@@ -73,42 +109,6 @@ const pages: NavItemType = {
         //   target: false
         // }
       ]
-    },
-    {
-      id: 'orders',
-      title: <FormattedMessage id="Orders" />,
-      type: 'item',
-      url: '/orders/list',
-      icon: icons.UnorderedListOutlined
-    },
-    {
-      id: 'customers',
-      title: <FormattedMessage id="Customers" />,
-      type: 'collapse',
-      icon: icons.UserOutlined,
-      children: [
-        {
-          id: 'list',
-          title: <FormattedMessage id="Customers list" />,
-          type: 'item',
-          url: '/customers/list',
-          icon: icons.OrderedListOutlined
-        },
-        {
-          id: 'create',
-          title: <FormattedMessage id="Create new customer" />,
-          type: 'item',
-          url: '/customers/create',
-          icon: icons.PlusOutlined
-        }
-      ]
-    },
-    {
-      id: 'sales',
-      title: <FormattedMessage id="Sales" />,
-      type: 'item',
-      url: '/sales/list',
-      icon: icons.UserOutlined
     }
 
     // {

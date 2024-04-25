@@ -9,6 +9,7 @@ import { OrderFilter } from '../../dto/idl-order-dto/idl-order-dto';
 import { PageDto } from '../../dto/page-data-dto/page-data-dto';
 import { Gender } from '../../model/gender';
 import { HeadCell } from '../../model/table';
+import dayjs from 'dayjs';
 
 export const SalesList = () => {
   const [filters, setFilters] = useState<OrderFilter>({});
@@ -18,127 +19,101 @@ export const SalesList = () => {
   });
   const headCells: HeadCell[] = [
     {
-      id: 'id',
+      id: 'ID',
       align: 'left',
       disablePadding: false,
-      label: 'Id',
-      searchKey: 'id',
-      defaultSortField: 'id',
+      label: 'ID',
+      searchKey: 'ID',
+      defaultSortField: 'ID',
       withSort: true
     },
     {
-      id: 'username',
+      id: 'productName',
       align: 'left',
       disablePadding: true,
-      label: 'User Name',
-      searchKey: 'username',
+      label: 'Tên sản phẩm',
+      searchKey: 'productName',
+      defaultSortField: 'productName'
+    },
+    {
+      id: 'status',
+      align: 'left',
+      disablePadding: false,
+      label: 'Trạng thái',
+      searchKey: 'status',
+      defaultSortField: 'status',
       withSearchBox: true,
-      defaultSortField: 'username',
-      withSort: true
-    },
-    // {
-    //   id: 'fullname',
-    //   align: 'left',
-    //   disablePadding: true,
-    //   label: 'Full Name',
-    //   searchKey: 'fullname',
-    //   withSearchBox: true,
-    //   defaultSortField: 'fullname',
-    //   withSort: true
-    // },
-    {
-      id: 'lastName',
-      align: 'left',
-      disablePadding: false,
-      label: 'Last Name',
-      searchKey: 'lastName',
-      defaultSortField: 'lastName',
       withSort: true
     },
     {
-      id: 'firstName',
+      id: 'price',
       align: 'left',
       disablePadding: false,
-      label: 'First Name',
-      searchKey: 'firstName',
-      defaultSortField: 'firstName',
+      label: 'Giá',
+      searchKey: 'price',
+      defaultSortField: 'price',
       withSort: true,
-      listItems: countries.map((item) => item.label)
+      withSearchBox: true
     },
     {
-      id: 'dateOfBirth',
+      id: 'date',
       align: 'left',
       disablePadding: false,
-      label: 'Date Of Birth',
-      searchKey: 'dateOfBirth',
-      defaultSortField: 'dateOfBirth',
-      withSort: true,
-      listItems: countries.map((item) => item.label)
-    },
-    {
-      id: 'email',
-      align: 'left',
-      disablePadding: false,
-      label: 'Email',
-      searchKey: 'email',
-      defaultSortField: 'email',
-      withSearchBox: true,
-      withSort: true,
-      listItems: countries.map((item) => item.label)
-    },
-    {
-      id: 'phoneNumber',
-      align: 'left',
-      disablePadding: false,
-      label: 'Phone Number',
-      searchKey: 'phoneNumber',
-      defaultSortField: 'phoneNumber',
-      withSort: true
-    },
-    {
-      id: 'gender',
-      align: 'left',
-      disablePadding: false,
-      label: 'Gender',
-      searchKey: 'gender',
-      defaultSortField: 'gender',
-      showSelect: true,
-      listItems: [Gender.Female, Gender.Male],
+      label: 'Ngày tạo',
+      searchKey: 'date',
+      defaultSortField: 'date',
       withSort: true
     }
-    // {
-    //   id: 'isSupperAdmin',
-    //   align: 'left',
-    //   disablePadding: false,
-    //   label: 'Is Supper Admin',
-    //   searchKey: 'isSupperAdmin',
-    //   defaultSortField: 'isSupperAdmin',
-    //   withSort: true
-    // }
   ];
-  const renderItems = (item: Sale) => {
+
+  const product = {
+    id: 1,
+    productName: 'Tivi',
+    price: 1000,
+    date: '25-10-2022',
+    status: 'Đã bán'
+  };
+  const householdProducts = [
+    'Bình đun nước điện',
+    'Lò vi sóng',
+    'Bếp điện từ',
+    'Máy giặt',
+    'Tủ lạnh',
+    'Máy hút bụi',
+    'Máy sấy quần áo',
+    'Bình nước nóng lạnh',
+    'Máy xay sinh tố',
+    'Nồi cơm điện'
+  ];
+
+  const productData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index) => ({
+    ...product,
+    id: index + 1,
+    productName: householdProducts.at(Math.floor(Math.random() * 10)),
+    price: `${Math.round(Math.random() * 100000)} VND`,
+    status: ['Đã bán', 'Vừa tạo', 'Bị từ chối'].at(Math.floor(Math.random() * 3)),
+    date: ['25-04-2022', '24-04-2022', '23-10-2022'].at(Math.floor(Math.random() * 3))
+  }));
+
+  const renderItems = (item: any) => {
     return [
       <TableCell scope="row" align="left">
         {item.id}
       </TableCell>,
-      <TableCell align="left">{item.username}</TableCell>,
-      <TableCell align="left">{item.lastName}</TableCell>,
-      <TableCell align="left">{item.firstName}</TableCell>,
-      <TableCell align="left">{item.dateOfBirth}</TableCell>,
-      <TableCell align="left">{item.email}</TableCell>,
-      <TableCell align="left">{item.phoneNumber}</TableCell>,
-      <TableCell align="left">{item.gender}</TableCell>,
-      <TableCell align="left">{item.isSupperAdmin}</TableCell>
+      <TableCell align="left">{item.productName}</TableCell>,
+      <TableCell align="left">{item.status}</TableCell>,
+      <TableCell align="left">{item.price}</TableCell>,
+      <TableCell align="left">{item.date}</TableCell>
     ];
   };
   return (
-    <MyTable<Sale, SaleFilter, SaleSortField>
+    <MyTable<any, SaleFilter, SaleSortField>
       onFilterChange={(filters) => setFilters(filters)}
       delegate={renderItems}
-      rows={data?.data ? data.data : []}
+      rows={productData}
       headCells={headCells}
       pageTotal={data?.meta.pageCount ? data?.meta.pageCount : 0}
-      isLoading={isLoading}
+      isLoading={false}
     />
   );
 };

@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { PageDto } from '../../dto/page-data-dto/page-data-dto';
 import { idlOrderAPI } from 'request/idl-order';
+import { id } from 'date-fns/locale';
 
 export const OrderList = () => {
   const [filters, setFilters] = useState<OrderFilter>({});
@@ -20,100 +21,116 @@ export const OrderList = () => {
   });
   const headCells: HeadCell[] = [
     {
-      id: 'iamaddNo',
+      id: 'ID',
       align: 'left',
       disablePadding: false,
-      label: 'Iamadd No',
-      searchKey: 'iamaddNo',
-      withSearchBox: true,
-      defaultSortField: 'iamaddNo',
+      label: 'ID',
+      searchKey: 'ID',
+      defaultSortField: 'ID',
       withSort: true
     },
     {
-      id: 'customerName',
+      id: 'productName',
       align: 'left',
       disablePadding: true,
-      label: 'Customer Name',
-      searchKey: 'customerName',
-      withSearchBox: true,
-      defaultSortField: 'customerName'
-    },
-    {
-      id: 'class',
-      align: 'left',
-      disablePadding: false,
-      label: 'Class',
-      searchKey: 'class',
-      defaultSortField: 'class'
-    },
-    {
-      id: 'dlOriginalCode',
-      align: 'left',
-      disablePadding: false,
-      label: "Driver's license original code",
-      searchKey: 'dlOriginalCode',
-      defaultSortField: 'dlOriginalCode',
-      withSort: true
-    },
-    {
-      id: 'periodOfValidity',
-      align: 'left',
-      disablePadding: false,
-      label: 'Period of validity',
-      searchKey: 'periodOfValidity',
-      defaultSortField: 'periodOfValidity',
-      showSelect: true,
-      listItems: [3, 5, 7, 10, 20],
-      withSort: true
-    },
-    {
-      id: 'idlIssueDate',
-      align: 'left',
-      disablePadding: false,
-      label: 'Idl issue Date',
-      searchKey: 'idlIssueDate',
-      defaultSortField: 'idlIssueDate',
-      withSort: true
+      label: 'Tên sản phẩm',
+      searchKey: 'productName',
+      defaultSortField: 'productName'
     },
     {
       id: 'status',
       align: 'left',
-      disablePadding: true,
-      label: 'Status',
+      disablePadding: false,
+      label: 'Trạng thái',
       searchKey: 'status',
-      showSelect: true,
-      listItems: [IdlOrderStatus.COMPLETED, IdlOrderStatus.FAILED, IdlOrderStatus.CREATED, IdlOrderStatus.SUBMITTING],
       defaultSortField: 'status',
+      withSearchBox: true
+    },
+    {
+      id: 'price',
+      align: 'left',
+      disablePadding: false,
+      label: 'Giá',
+      searchKey: 'price',
+      defaultSortField: 'price',
+      withSort: true,
+      withSearchBox: true
+    },
+    {
+      id: 'paymentMethod',
+      align: 'left',
+      disablePadding: false,
+      label: 'Phương thức thanh toán',
+      searchKey: 'paymentMethod',
+      defaultSortField: 'paymentMethod',
+      showSelect: true,
+      listItems: ['Tiền mặt', 'ATM', 'Momo'],
+      withSort: true
+    },
+    {
+      id: 'date',
+      align: 'left',
+      disablePadding: false,
+      label: 'Ngày mua',
+      searchKey: 'date',
+      defaultSortField: 'date',
       withSort: true
     }
   ];
-  const renderItems = (item: Order) => {
+
+  const product = {
+    id: 1,
+    productName: 'T-Shirt',
+    status: 'Đã đặt',
+    price: 1000000,
+    paymentMethod: 'ATM',
+    date: '25-10-2024'
+  };
+  const householdProducts = [
+    'Bình đun nước điện',
+    'Lò vi sóng',
+    'Bếp điện từ',
+    'Máy giặt',
+    'Tủ lạnh',
+    'Máy hút bụi',
+    'Máy sấy quần áo',
+    'Bình nước nóng lạnh',
+    'Máy xay sinh tố',
+    'Nồi cơm điện'
+  ];
+
+  const datas = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((e, index) => ({
+    ...product,
+    productName: householdProducts.at(Math.floor(Math.random() * 10)),
+    id: index + 1,
+    price: `${Math.round(Math.random() * 100000)} VND`,
+    paymentMethod: ['Tiền mặt', 'ATM', 'Momo'].at(Math.floor(Math.random() * 3)),
+    status: ['Đã nhận hàng', 'Đã giao cho đơn vị kho', 'Đã thanh toán'].at(Math.floor(Math.random() * 3)),
+    date: ['25-04-2022', '24-04-2022', '23-10-2022'].at(Math.floor(Math.random() * 3))
+  }));
+
+  const renderItems = (item: any) => {
     return [
       <TableCell scope="row" align="left">
         <Link color="secondary" component={RouterLink} to="">
-          {item.iamaddNo}
+          {item.id}
         </Link>
       </TableCell>,
-      <TableCell align="left">{item.customer?.fullName}</TableCell>,
-      <TableCell align="left">{item.idlClass}</TableCell>,
-      <TableCell align="left">{item.dlOriginalCode}</TableCell>,
-      <TableCell align="left">
-        <NumericFormat value={item.periodOfValidity} displayType="text" />
-      </TableCell>,
-      <TableCell align="left">{item.idlIssueDate}</TableCell>,
-      <TableCell align="left">
-        <OrderStatus status={item.status} />
-      </TableCell>
+      <TableCell align="left">{item.productName}</TableCell>,
+      <TableCell align="left">{item.status}</TableCell>,
+      <TableCell align="left">{item.price}</TableCell>,
+      <TableCell align="left">{item.paymentMethod}</TableCell>,
+      <TableCell align="left">{item.date}</TableCell>
     ];
   };
   return (
     <MyTable<any, OrderFilter, OrderSortField>
       onFilterChange={(filters) => setFilters(filters)}
       delegate={renderItems}
-      rows={data?.data ? data.data : []}
+      rows={datas}
       headCells={headCells}
       pageTotal={data?.meta.pageCount ? data?.meta.pageCount : 0}
-      isLoading={isLoading}
+      isLoading={false}
     />
   );
 };

@@ -46,7 +46,7 @@ const LogoSection = ({ reverse, isIcon, sx, to }: Props) => {
             alt={''}
           />
           <Typography variant={'h4'} alignSelf={'center'}>
-            Driving License
+            Second Life Admin
           </Typography>
         </Stack>
       )}
