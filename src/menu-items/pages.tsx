@@ -39,6 +39,13 @@ const pages: NavItemType = {
   type: 'group',
   children: [
     {
+      id: 'dashboard',
+      title: <FormattedMessage id="Dashboard" />,
+      type: 'item',
+      url: '/dashboard/default',
+      icon: icons.UnorderedListOutlined
+    },
+    {
       id: 'orders',
       title: <FormattedMessage id="Đơn hàng" />,
       type: 'item',

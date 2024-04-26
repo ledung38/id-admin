@@ -89,6 +89,21 @@ export const CustomersList = () => {
       label: 'Actions'
     }
   ];
+
+  const customer = {
+    id: 1,
+    fullName: 'John Doe',
+    phoneNumber: '1234567890',
+    country: 'USA',
+    gender: Gender.Male,
+    createdAt: new Date()
+  };
+
+  const cData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index) => ({
+    ...customer,
+    id: index + 1,
+    fullName: customer.fullName + ' ' + index
+  }));
   const renderItems = (item: Customer) => {
     return [
       <TableCell scope="row" align="left">
@@ -129,10 +144,10 @@ export const CustomersList = () => {
   };
   return (
     <>
-      <MyTable<Customer, CustomerFilter, CustomerSortField>
+      <MyTable<any, CustomerFilter, CustomerSortField>
         onFilterChange={(filters) => setFilters(filters)}
         delegate={renderItems}
-        rows={[]}
+        rows={cData}
         headCells={headCells}
         pageTotal={data?.meta.pageCount ? data?.meta.pageCount : 0}
         isLoading={false}
